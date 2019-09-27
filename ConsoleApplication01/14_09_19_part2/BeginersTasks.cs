@@ -11,7 +11,7 @@ namespace _14_09_19_part2
         public const double Pi = 3.14;
     }
 
-    static class Helpers
+    public static class Helpers
     {
         public static void Print(string msg, int errorlevel=1)
         {
