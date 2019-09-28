@@ -1,4 +1,6 @@
 ﻿using System;
+using _14_09_19_part2;
+
 
 namespace HW2
 {
@@ -118,6 +120,7 @@ namespace HW2
     {
         static void Main(string[] args)
         {
+            Helpers.Print("Hello. This is home work day2:");
             HW2tasks.Task1();
             Console.Write(HW2tasks.Task2(5));
             Console.Write(HW2tasks.Task3and4(5,6));
@@ -130,6 +133,7 @@ namespace HW2
             Console.Write('\n');
             HW2tasks.DrawRhombus();
             Console.Write('\n');
+            
         }
     }
 }
