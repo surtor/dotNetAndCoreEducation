@@ -4,7 +4,7 @@ using _14_09_19_part2;
 
 namespace Lesson3
 {
-    class Program
+    public class LibArray
     {
         public static void Swap(ref int x, ref int y)
         {
