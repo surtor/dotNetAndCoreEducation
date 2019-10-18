@@ -1,0 +1,14 @@
+{
+  "ImportGroups": [
+    {
+      "bReplaceExisting": "true",
+      "ImportSettings": "",
+      "FileNames": [
+        "G:/svn/VoiceSource/Dialogs/BS_Undertaker/EN/CharlesPerry_BS_Undertaker_Start_Phrase1464.wav"
+      ],
+      "GroupName": "RoboVoice",
+      "DestinationPath": "/Voices/Dialogs/BS_Undertaker",
+      "bSkipReadOnly": "false"
+    }
+  ]
+}

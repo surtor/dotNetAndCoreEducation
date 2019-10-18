@@ -1,0 +1,40 @@
+{
+  "ImportGroups": [
+    {
+      "bReplaceExisting": "true",
+      "ImportSettings": {
+        "AnimSequenceImportData": {
+          "bUseDefaultSampleRate": "True",
+          "bImportMesh": "False",
+          "AnimationLength": "FBXALIT_ExportedTime",
+          "bRemoveRedundantKeys": "False",
+          "bPreserveLocalTransform": "False",
+          "bImportMorphTargets": "True",
+          "bForceFrontXAxis": "False",
+          "bSetMaterialDriveParameterOnCustomAttribute": "False",
+          "bDeleteExistingMorphTargetCurves": "False",
+          "bConvertSceneUnit": "False",
+          "bDoNotImportCurveWithZero": "True",
+          "bConvertScene": "True",
+          "bImportCustomAttribute": "True"
+        },
+        "bImportAnimations": "True",
+        "MeshTypeToImport": "FBXIT_Animation",
+        "Skeleton": "/Game/Animation_Asset/Skeletons/CHR_Main_Character_Skeleton.CHR_Main_Character_Skeleton",
+        "bImportAsSkeletal": "True",
+        "OriginalImportType": "FBXIT_SkeletalMesh",
+        "bImportMaterials": "False",
+        "SkeletalMeshImportData": {
+          "bImportMeshesInBoneHierarchy": "False"
+        }
+      },
+      "FileNames": [
+        "G:/svn/VoiceSource/Dialogs/BS_Undertaker/EN/mc_BS_Undertaker_Start_Phrase1463_face.fbx"
+      ],
+      "GroupName": "LipSync",
+      "DestinationPath": "/Voices/Dialogs/BS_Undertaker",
+      "FactoryName": "FbxFactory",
+      "bSkipReadOnly": "false"
+    }
+  ]
+}
