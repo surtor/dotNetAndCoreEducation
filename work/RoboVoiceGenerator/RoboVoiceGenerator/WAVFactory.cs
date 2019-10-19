@@ -14,7 +14,7 @@ namespace RoboVoiceGenerator
 
         private string RemoveSpecSymbolFromTextFile()
         {
-            string calenedText = Regex.Replace(this.currentObject.Text, @"\[.*?\]", String.Empty); // @"\[.*?\]" - I don't what is it and how does it works. But, it works!
+            string calenedText = Regex.Replace(this.currentObject.GetText(currentLANG), @"\[.*?\]", String.Empty); // @"\[.*?\]" - I don't what is it and how does it works. But, it works!
             calenedText = calenedText.Replace("\n", "");
             calenedText = calenedText.Replace("\r", "");
             return calenedText;
@@ -24,7 +24,7 @@ namespace RoboVoiceGenerator
         {
             string path = GetFullPath();
             string cleanedText = RemoveSpecSymbolFromTextFile();
-            string commandLineArg = $"-t {cleanedText} -w {path} -n {this.currentObject.Voice}";
+            string commandLineArg = $"-t \"{cleanedText}\" -w {path} -n {this.currentObject.Voice}";
             this.ExecuteBalcon(commandLineArg);
             if (File.Exists(this.GetFullPath()))
             {
@@ -32,22 +32,28 @@ namespace RoboVoiceGenerator
             }
             else
             {
-                Console.WriteLine("ERROR!!!!!");
+                Console.WriteLine($"ERROR: Generate wav = {this.GetFullPath()} file failed!");
                 return false;
             }
         }
 
         private string GetFullPath()
         {
-            return $"{Config.voRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FileName}.wav";
+            return $"{Config.generatedVoiceRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FolderName}/{this.currentObject.FileName}.wav";
         }
 
         private void ExecuteBalcon(string commandLineArg)
         {
+            if (!File.Exists(Config.balconBinPath))
+            {
+                Console.WriteLine($"WARNING: File {Config.balconBinPath} not Exist, skip GenerateWav step.");
+                return;
+            }
+
             ProcessStartInfo processInfo = new ProcessStartInfo();
             processInfo.CreateNoWindow = false;
             processInfo.UseShellExecute = false;
-            processInfo.FileName = Config.balconPath;
+            processInfo.FileName = Config.balconBinPath;
             processInfo.WindowStyle = ProcessWindowStyle.Hidden;
             processInfo.Arguments = commandLineArg;
             Console.WriteLine($"INFO: Executing the following command: {processInfo.FileName} {processInfo.Arguments}");
@@ -55,7 +61,7 @@ namespace RoboVoiceGenerator
             {
                 using (Process executeProcess = Process.Start(processInfo))
                 {
-                    executeProcess.WaitForExit();
+                    //executeProcess.WaitForExit();
                 }
             }
             catch
@@ -90,7 +96,7 @@ namespace RoboVoiceGenerator
                 writer.WritePropertyName("GroupName");
                 writer.WriteValue("RoboVoice");
                 writer.WritePropertyName("DestinationPath");
-                writer.WriteValue($"{this.currentObject.ue4path}");
+                writer.WriteValue($"{this.currentObject.Ue4DestinationPath}");
                 writer.WritePropertyName("bSkipReadOnly");
                 writer.WriteValue("false");
                 writer.WriteEnd();

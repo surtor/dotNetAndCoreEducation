@@ -7,15 +7,13 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 public enum LANG { EN, DE, FR, RU };
-public enum FILETYPE { txt, wav, uasset, fbx };
 
 namespace RoboVoiceGenerator
 {
     public class VoiceObject
     {
-        private string destinationPath;
-        public string ue4DestinationPath;
-        private string voDestinationPath;
+        public string Ue4DestinationPath { get; set;}
+        public string FolderName { get; set; }
 
         private dynamic text;
         public dynamic Text
@@ -48,11 +46,10 @@ namespace RoboVoiceGenerator
         public VoiceObject(string containerID)
         {
             //constructor part
-            this.destinationPath = $"{Config.projectRootVoicesFolder}/Dialogs/{containerID}";
-            this.ue4DestinationPath = $"/Voices/Dialogs/{containerID}";
-            this.voDestinationPath = $"{Config.generatedVoiceRootFolder}/Dialogs/{containerID}";
-            
-            //we setup this data later
+            this.Ue4DestinationPath = $"/Voices/Dialogs/{containerID}";
+            this.FolderName = containerID;
+
+            //just to get a syntax part of C#
             this.text = null;
             this.character = null;
             this.gender = null;
@@ -61,7 +58,7 @@ namespace RoboVoiceGenerator
 
         public override string ToString()
         {
-            return $"fullPath = {fullPath}\n ue4path = {ue4path}\n text = {text}\n character = {character}\n gender = {gender}\n voiceSourceFolder = {voiceSourceFolder}\n fileName = {fileName}\n";
+            return $"ue4DestinationPath = {Ue4DestinationPath}\n text = {text}\n character = {character}\n gender = {gender}\n fileName = {fileName}\n";
         }
 
         public string GetText(LANG language)

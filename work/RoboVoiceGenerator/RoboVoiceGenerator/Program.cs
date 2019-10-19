@@ -14,16 +14,12 @@ namespace RoboVoiceGenerator
     {
         static void Main(string[] args)
         {
-            
+            Config setupConfig = new Config(args[0].Replace("\\","/"), args[1]);
             //HttpClient client = new HttpClient();
-            Config.ue4Path = "G:/svn/UE4T/Engine/Binaries/Win64/UE4Editor-Cmd.exe";
 
-            string jsonSourceFilePath = "G:/svn/FrogMacros/CSmacros/source.json";
-            Config.rootPath = "G:/svn/UE4T/SH9/Content/Voices";
-            Config.voRootFolder = "G:/svn/VoiceSource";
             string json = "";
 
-            using (StreamReader r = new StreamReader(jsonSourceFilePath))
+            using (StreamReader r = new StreamReader(Config.jsonSourceFilePath))
             {
                 json = r.ReadToEnd();
             }
@@ -64,22 +60,11 @@ namespace RoboVoiceGenerator
 
             foreach (var voObj in voiceObjectList)
             {
-                if(tXTFactory.main(voObj))
+                if(tXTFactory.Main(voObj))
                 {
-                    wAVFactory.main(voObj);
-                    fBXFactory.main(voObj);
+                    wAVFactory.Main(voObj);
+                    fBXFactory.Main(voObj);
                 }
-                //if (!voObj.Is_textFileUpToDate(LANG.EN))
-                //{
-                //    voObj.GenerateTextFile(LANG.EN);
-                //    voObj.GenerateWavFile(LANG.EN);
-                //    voObj.ImportWavFile(LANG.EN);
-                //    if (!voObj.GenerateFBXFile(LANG.EN))
-                //    {
-                //        Console.WriteLine($"WARNINGL FBX for this file {voObj.FileName} have not beed created");
-                //    }
-                //    voObj.ImportFbxFile(LANG.EN);
-                //}
             }
         }
     }

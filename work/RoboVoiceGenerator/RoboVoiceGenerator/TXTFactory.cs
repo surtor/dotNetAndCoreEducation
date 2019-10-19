@@ -16,6 +16,11 @@ namespace RoboVoiceGenerator
                 return false;
             }
             string path = GetFullPath();
+
+            System.IO.FileInfo file = new System.IO.FileInfo(path);
+            file.Directory.Create(); // If the directory already exists, this method does nothing.
+            //System.IO.File.WriteAllText(file.FullName, content);
+
             using (StreamWriter fw = File.CreateText(path))
             {
                 fw.WriteLine(this.currentObject.GetText(this.currentLANG));
@@ -26,14 +31,14 @@ namespace RoboVoiceGenerator
             }
             else
             {
-                Console.WriteLine("ERROR!!!!!");
+                Console.WriteLine($"ERROR: Generate txt = {this.GetFullPath()} file failed!");
                 return false;
             }
         }
 
         private string GetFullPath()
         {
-            return $"{Config.voRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FileName}.txt";
+            return $"{Config.generatedVoiceRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FolderName}/{this.currentObject.FileName}.txt";
         }
 
         protected override void CreateJsonForImport() { }
@@ -50,7 +55,6 @@ namespace RoboVoiceGenerator
                 using (StreamReader data = new StreamReader(path))
                 {
                     string f_text = data.ReadToEnd();
-                    //Console.WriteLine($"FILE TEXT: {f_text}\n GetText: {this.GetText(language)}");
                     return this.currentObject.GetText(this.currentLANG) == f_text;
                 }
             }

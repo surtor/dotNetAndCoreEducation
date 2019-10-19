@@ -9,9 +9,7 @@ namespace RoboVoiceGenerator
 {
     public class FBXFactory : BaseFactory
     {
-        public FBXFactory(LANG currentLANG) : base(currentLANG, Config.pathToFBXJsonFile)
-        {
-        }
+        public FBXFactory(LANG currentLANG) : base(currentLANG, Config.pathToFBXJsonFile) { }
 
         protected override bool Generate()
         {
@@ -27,20 +25,27 @@ namespace RoboVoiceGenerator
             }
             else
             {
-                Console.WriteLine("ERROR!!!!!");
+                Console.WriteLine($"ERROR: FBX file {this.GetFullPath()} have not generated!");
                 return false;
             }
         }
+
         private string GetFullPath()
         {
-            return $"{Config.voRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FileName}_face.fbx";
+            return $"{Config.generatedVoiceRootFolder}/Dialog/{this.currentLANG}/{this.currentObject.FolderName}/{this.currentObject.FileName}_face.fbx";
         }
+
         private void ExecuteFaceFXstudio(string commandLineArg)
         {
+            if (!File.Exists(Config.faceFXBinPath))
+            {
+                Console.WriteLine($"WARNING: File {Config.faceFXBinPath} not Exist, skip FBXGenenerate step.");
+                return;
+            }
             ProcessStartInfo processInfo = new ProcessStartInfo();
             processInfo.CreateNoWindow = false;
             processInfo.UseShellExecute = false;
-            processInfo.FileName = Config.faceFXstudioPath;
+            processInfo.FileName = Config.faceFXBinPath;
             processInfo.WindowStyle = ProcessWindowStyle.Hidden;
             processInfo.Arguments = commandLineArg;
             Console.WriteLine($"INFO: Executing the following command: {processInfo.FileName} {processInfo.Arguments}");
@@ -56,6 +61,7 @@ namespace RoboVoiceGenerator
                 Console.WriteLine($"Someting went wrong with this arg: {commandLineArg}");
             }
         }
+
         protected override void CreateJsonForImport()
         {
             StringBuilder sb = new StringBuilder();
@@ -129,7 +135,7 @@ namespace RoboVoiceGenerator
                 writer.WritePropertyName("GroupName");
                 writer.WriteValue("LipSync");
                 writer.WritePropertyName("DestinationPath");
-                writer.WriteValue($"{this.currentObject.ue4path}");
+                writer.WriteValue($"{this.currentObject.Ue4DestinationPath}");
                 writer.WritePropertyName("FactoryName");
                 writer.WriteValue("FbxFactory");
                 writer.WritePropertyName("bSkipReadOnly");
